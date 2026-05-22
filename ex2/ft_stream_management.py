@@ -30,14 +30,14 @@ def main() -> None:
                 edit_version += "#"
 
         except Exception as e:
-            print(f"Error opening file '{sys.argv[1]}': {e}")
+            sys.stderr.write(f"Error: {e}\n")
             return
         finally:
             file.close()
             print(f"File ’{sys.argv[1]}’ closed.")
 
     except Exception as e:
-        print(e)
+        sys.stderr.write(f"Error: {e}\n")
         return
     print("Transform data:")
     print("---")
@@ -45,7 +45,11 @@ def main() -> None:
     print(edit_version)
     print()
     print("---")
-    new_file_n = input("Enter new file name (or empty): ")
+    
+    sys.stdout.write("Enter new file name (or empty): ")
+    sys.stdout.flush()
+    new_file_n = sys.stdin.readline().strip('\n')
+    
     if (new_file_n == ""):
         print("")
     try:
@@ -54,10 +58,11 @@ def main() -> None:
         print(f"Data saved in file ’{new_file_n}’.")
         new_file.write(edit_version)
     except Exception as e:
-        print(e)
+        sys.stderr.write(f"Error: {e}\n")
         
     finally:
-        new_file.close()
+        if (new_file != None):
+            new_file.close()
 
 
 
