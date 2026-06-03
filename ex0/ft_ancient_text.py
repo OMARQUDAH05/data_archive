@@ -2,11 +2,12 @@ import sys
 
 
 def main() -> None:
+    file = None
     try:
         if (len(sys.argv) < 2):
             raise Exception("Usage: ft_ancient_text.py <file>")
-            print("=== Cyber Archives Recovery ===")
-            print(f"Accessing file {sys.argv[1]}")
+        print("=== Cyber Archives Recovery ===")
+        print(f"Accessing file {sys.argv[1]}")
 
         try:
             file = open(sys.argv[1], 'rt')
@@ -14,12 +15,14 @@ def main() -> None:
             print("---")
             print()
             print(content)
+            print
             print("---")
         except Exception as e:
             print(f"Error opening file '{sys.argv[1]}': {e}")
         finally:
-            file.close()
-            print(f"File ’{sys.argv[1]}’ closed.")
+            if file is not None:
+                file.close()
+                print(f"File ’{sys.argv[1]}’ closed.")
     except Exception as e:
         print(e)
 
